@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+
+  <div class = "container">
+    <div class = "row">
+         <div class = "col-md-12" Id = "animalSection"> </div>
+    <div class = "row">
+         <div class = "col-md-8" Id = "Images">
+              
+         </div>
+         <div class = "col-md-4" >
+              <div class="form-group">
+                <label for="search">Add Animal</label>
+                <input type="text" class="form-control" id="search">
+              </div>
+              <button class = "Clicker">
+                  Click ME! 
+              </button>
+         </div>
+
+    </div> 
+
+ </div>
+
+ <script type="text/javascript">
+ $(document).ready(function() {
+      var queryURLBase  = "http://api.giphy.com/v1/gifs/search?q=" ;
+      var apiKeys= "&api_key=dc6zaTOxFJmzC&limit=10";
+      var animals = ["dog", "cat", "rabbit", "horse", "duck"];
+      for( var i = 0 ; i < animals.length ; i++){
+      //var newUR =  queryURLBase +"&q=" + animals[i];
+      //implementQuery(10, newUR);
+      var buttonName = $("<button>");
+      buttonName.addClass("animalButton");
+      buttonName.attr("value", animals[i] ); 
+      buttonName.text(animals[i]);
+      $("#animalSection").append(buttonName);
+      $("#animalSection").append("   ");
+
+
+      }
+
+     
+      $( document ).on( 'click', '.animalButton', function (){
+      $("#Images").html(""); 
+      queryTerm = $(this).attr("value");
+      var newURL = queryURLBase +queryTerm+apiKeys;
+      console.log(newURL);
+      console.log($(this).attr("value")); 
+      implementQuery(10,newURL );
+
+
+
+      });
+
+
+
+      $(".Clicker").on("click", function(event){
+
+
+
+      event.preventDefault();
+      
+
+
+      queryTerm = $("#search").val().trim();
+      var buttonName = $("<button>");
+      buttonName.addClass("animalButton");
+      buttonName.attr("value", queryTerm ); 
+      buttonName.text(queryTerm);
+      $("#animalSection").append(buttonName);
+      $("#animalSection").append("   ");
+
+
+      var newURL = queryURLBase +queryTerm+apiKeys;
+
+      console.log(queryTerm);
+      
+      implementQuery( 10 ,newURL ); 
+
+
+      });
+
+      
+      function implementQuery(numIMG, QURL){
+      $.ajax({
+      url: QURL,
+      method: "GET"
+      }).done(function(imgData){
+      	//console.log(imgData);
+        //results[i].images.fixed_height.url
+        for( var i = 0 ;  i < numIMG; i ++){
+        var currentObj = imgData.data[i];
+        console.log(currentObj); 
+        var bigContainer = $("<div>");
+        var ratingDiv = $("<p>");
+        ratingDiv.text(imgData.data[i].rating); 
+        var newImg = $("<img>");
+        newImg.attr("src", imgData.data[i].images.fixed_height.url); 
+        bigContainer.append(ratingDiv);  
+        bigContainer.append(newImg);  
+        $("#Images").prepend(bigContainer); 
+
+
+        }
+       
+
+
+
+
+      });
+
+
+
+
+
+
+
+      }
+      
+
+
+
+
+   
+
+
+
+
+
+});
+
+
+</script> 	
+
+
+
+</body>
+
+
+
+
+</html>
+
+
+
+  
