@@ -101,7 +101,7 @@
         console.log(currentObj); 
         var bigContainer = $("<div>");
         var ratingDiv = $("<p>");
-        ratingDiv.text(imgData.data[i].rating); 
+        ratingDiv.text("Rating : "  +imgData.data[i].rating); 
         var newImg = $("<img>");
         newImg.attr("src", imgData.data[i].images.fixed_height.url); 
         bigContainer.append(ratingDiv);  
