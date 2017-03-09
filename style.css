@@ -1,0 +1,16 @@
+
+.arrange{
+width : 200px;
+
+display : inline-block;
+margin-left:20px;
+
+
+}
+
+
+.arrange img{
+ width : 100%;
+ height : 80%;
+ 
+}
